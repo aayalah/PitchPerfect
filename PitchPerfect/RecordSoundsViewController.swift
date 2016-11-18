@@ -20,6 +20,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        stop.isEnabled = false
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -49,12 +50,12 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     @IBAction func stopRecord(_ sender: AnyObject) {
-        startRecording.isEnabled = true
-        stop.isEnabled = false
-        recordingLabel.text = "Tap to Record"
-        audioRecorder.stop()
-        let audioSession = AVAudioSession.sharedInstance()
-        try! audioSession.setActive(false)
+            startRecording.isEnabled = true
+            stop.isEnabled = false
+            recordingLabel.text = "Tap to Record"
+            audioRecorder.stop()
+            let audioSession = AVAudioSession.sharedInstance()
+            try! audioSession.setActive(false)
         
     }
     
