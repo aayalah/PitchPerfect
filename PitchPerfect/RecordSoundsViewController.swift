@@ -23,17 +23,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         stop.isEnabled = false
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
+  
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print("in")
         if(flag){
-            self.performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
+            performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
         } else {
             print("Saving of recording failed")
         }
@@ -50,9 +44,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     @IBAction func stopRecord(_ sender: AnyObject) {
-            startRecording.isEnabled = true
-            stop.isEnabled = false
-            recordingLabel.text = "Tap to Record"
+            configureUI(false)
             audioRecorder.stop()
             let audioSession = AVAudioSession.sharedInstance()
             try! audioSession.setActive(false)
@@ -60,10 +52,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @IBAction func recordAudio(_ sender: AnyObject) {
-        recordingLabel.text = "Recording in Progress"
-        startRecording.isEnabled = false
-        stop.isEnabled = true
-        
+        configureUI(true)
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)[0] as String
         let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
@@ -79,7 +68,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.record()
     }
 
-    
+    private func configureUI(_ recording: Bool){
+        startRecording.isEnabled = !recording
+        stop.isEnabled = recording
+        recordingLabel.text = recording ? "Recording in Progress" : "Tap to Record"
+    }
  
     
     
