@@ -32,7 +32,7 @@ class PlaySoundsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configureUI(.notPlaying)
+        configureUI(playState: .NotPlaying)
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,7 +59,7 @@ class PlaySoundsViewController: UIViewController {
         case .Reverb:
             playSound(reverb: true)
         }
-        configureUI(.playing)
+        configureUI(playState: .Playing)
     }
     
     @IBAction func stopButtonPressed(_ sender: AnyObject) {
